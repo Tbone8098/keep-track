@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% include 'components/navbar.html' %}
+    
+    <h2>Create a New category</h2>
+    
+    <form action="/category/create" method="post">
+        {% if category_id %}
+            <input type="hidden" name="category_id" id="category_id" value="{{ category_id }}">
+        {% endif %}
+        <div class="mb-3">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" name="name" id="name">
+            {% for message in get_flashed_messages(category_filter='err_category_name') %}
+                <p class='alert alert-danger'>{{ message }}</p>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="description">description</label>
+            <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
+            {% for message in get_flashed_messages(category_filter='err_category_description') %}
+                <p class='alert alert-danger'>{{ message }}</p>
+            {% endfor %}
+        </div>
+        <button class="btn btn-success">Create category</button>
+    </form>
+{% endblock content %}

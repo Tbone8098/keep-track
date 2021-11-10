@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% block content %}
+{% include 'components/navbar.html' %}
+<div class="row">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2>{{ task.name }}</h2>
+            <p>{{ task.description }}</p>
+        </div>
+        <div>
+            {% if not task.is_completed %}
+            <button class="btn btn-success task-complete" task_id="{{task.id}}">Complete</button>
+            {% else %}
+            <button class="btn btn-warning task-complete" task_id="{{task.id}}">Uncomplete</button>
+            {% endif %}
+            <a href="/task/{{task.id}}/delete" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="">
+        <div class="box">
+            <div class="d-flex align-items-center">
+                <h2>Tasks</h2>
+                <a href="/task/new/{{task.category_id}}/{{task.id}}" class="ms-3">+ ADD</a>
+            </div>
+            {% for task in task.sub_tasks %}
+            <div class="d-flex justify-content-between me-3">
+                <div>
+                    <input type="checkbox" name="" id="">
+                    <a href="/task/{{task.id}}">{{task.name}}</a>
+                </div>
+                <a href="/task/{{task.id}}/delete">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{{url_for('static', filename='js/tasks.js')}}"></script>
+{% endblock js %}

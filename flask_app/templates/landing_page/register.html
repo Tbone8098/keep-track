@@ -1,0 +1,80 @@
+{% extends 'index.html' %}
+{% block content %}
+{% include 'landing_page/navbar.html' %}
+    <h2 class="text-center">Register</h2>
+    <div class="row">
+        {% if not session['family_id'] %}
+        <div class="col-sm-6">
+            <h3>Create New Family</h3>
+            <form action="family/create" method="post">
+                <div class="mb-3">
+                    <label for="name">Family Name</label>
+                    <input class="form-control" type="text" name="name" id="name">
+                    {% for message in get_flashed_messages(category_filter='err_family_name') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                <button class="btn btn-success">Create Family</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <h3>Join A Family</h3>
+            <form action="family/join" method="post">
+                <div class="mb-3">
+                    <label for="code">Family Code</label>
+                    <input class="form-control" type="text" name="code" id="code">
+                    {% for message in get_flashed_messages(category_filter='err_family_code') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                <button class="btn btn-success">Join Family</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Create User</h3>
+            <a href="/family/clear" class="btn btn-secondary">Change Family</a>
+        </div>
+        <form action="/user/create" method="post">
+            <div class="mb-3">
+                <label for="first_name">First Name</label>
+                <input class="form-control" type="text" name="first_name" id="first_name">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_first_name') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="last_name">Last Name</label>
+                <input class="form-control" type="text" name="last_name" id="last_name">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_last_name') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" name="email" id="email">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_email') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="pw">Password</label>
+                <input class="form-control" type="text" name="pw" id="pw">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_pw') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="confirm_pw">Confirm Password</label>
+                <input class="form-control" type="text" name="confirm_pw" id="confirm_pw">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_confirm_pw') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <button class="btn btn-success">Create User</button>
+        </form>
+    </div>
+    {% endif %}
+{% endblock content %}

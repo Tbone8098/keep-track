@@ -1,0 +1,84 @@
+:root {
+    --color-1: #335c67;
+    --color-2: #fff3b0;
+    --color-3: #e09f3e;
+    --color-4: #9e2a2b;
+    --color-5: #540b0e;
+}
+
+.bg-c1 {
+    background-color: var(--color-1);
+}
+
+.bg-c2 {
+    background-color: var(--color-2);
+}
+
+.bg-c3 {
+    background-color: var(--color-3);
+}
+
+.bg-c4 {
+    background-color: var(--color-4);
+}
+
+.bg-c5 {
+    background-color: var(--color-5);
+}
+
+.txt-c1 {
+    color: var(--color-1);
+}
+
+.txt-c2 {
+    color: var(--color-2);
+}
+
+.txt-c3 {
+    color: var(--color-3);
+}
+
+.txt-c4 {
+    color: var(--color-4);
+}
+
+.txt-c5 {
+    color: var(--color-5);
+}
+
+
+.box {
+    margin: 0.5em;
+    padding: 1em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+}
+
+.box-dotted {
+    border: 1px dashed black;
+}
+
+.clickable:hover {
+    cursor: pointer;
+    background-color: var(--color-2);
+    color: var(--color-5);
+}
+
+.one-lined {
+    text-decoration: line-through;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-1);
+}
+
+.ul-menu {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.ul-menu > *{
+    margin-left: 0.5em;
+}

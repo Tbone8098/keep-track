@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    <h1>Your Settings</h1>
+    <div id="personal-settings">
+        <form action="/user/{{user.id}}/update" method="post">
+            <div class="mb-3">
+                <label for="first_name">First Name</label>
+                <input class="form-control" type="text" name="first_name" id="first_name" value="{{user.first_name}}">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_first_name') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="last_name">Last Name</label>
+                <input class="form-control" type="text" name="last_name" id="last_name" value="{{user.last_name}}" >
+                {% for message in get_flashed_messages(category_filter='err_user_reg_last_name') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" name="email" id="email" value="{{user.email}}">
+                {% for message in get_flashed_messages(category_filter='err_user_reg_email') %}
+                    <p class='alert alert-danger'>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <button class="btn btn-success">Update Personal Info</button>
+        </form>
+
+        <hr>
+        {% set family = user.family %}
+        <h2>Family {{ family.name }}</h2>
+        <p>Family Code: {{ family.code }}</p>
+        
+        {% for member in family.members %}
+        <ul>
+            <li>{{member.fullname}}</li>
+        </ul>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/bootstrap.min.css')}}">
+    
+    <!-- my css -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+    {% block css %}
+        
+    {% endblock css %}
+
+    <title>Keep Track</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            {% block content %}
+            
+            {% endblock content %}
+        </div>
+
+    </div>
+
+
+    <!-- bootstrap js -->
+    <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js')}}"></script>
+    
+    <!-- my js -->
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+    
+    {% block js %}
+        
+    {% endblock js %}
+</body>
+</html>

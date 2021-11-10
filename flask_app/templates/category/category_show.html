@@ -1,0 +1,117 @@
+{% extends 'index.html' %}
+{% block content %}
+{% include 'components/navbar.html' %}
+<div class="row">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <span>{% if category.parent %}
+                <a href="/category/{{category.parent.id}}">Go Back</a>
+                {% endif %}</span>
+            <h2> {{ category.name }}</h2>
+            <div>
+                <input type="checkbox" name="is_public" id="is_public" {{'checked' if category.is_public else '' }}
+                class="clickable ms-3" url="/category/{{category.id}}/public"> <span>Is Public</span>
+            </div>
+        </div>
+        <div>
+            <a href="/category/{{category.id}}/delete" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+    <p>{{ category.description }}</p>
+</div>
+
+<div class="row">
+    <div class="d-flex">
+        {% set categorys = category.inner_categorys %}
+        {% if categorys %}
+        {% for inner_category in categorys %}
+        <div class="box clickable" url="/category/{{inner_category.id}}">
+            {{ inner_category.name }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="box box-dotted clickable" url="/category/new/{{category.id}}">
+            <a href="#">Add a category</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="box">
+            <div class="d-flex align-tasks-center">
+                <h2>Tasks</h2>
+                <a href="/task/new/{{category.id}}" class="ms-3">+ ADD</a>
+            </div>
+            <strong>tasks That Need to get Done</strong>
+            {% set tasks = category.tasks %}
+
+            {% if tasks %}
+            {% for item in tasks %}
+            {% if not item.is_completed %}
+            {% if item.is_main %}
+            {{item.is_main}}
+            <div class="d-flex justify-content-between">
+                <div>
+                    <input type="checkbox" class="clickable" url="/task/{{item.id}}/complete">
+                    <a href="/task/{{item.id}}">{{item.name }}</a>
+                </div>
+                <a class="text-danger" href="/task/{{item.id}}/delete">Delete</a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <hr>
+            <div class="row">
+                <strong>Done</strong>
+                {% if tasks %}
+                {% for task in tasks %}
+                {% if task.is_completed %}
+                <p><input type="checkbox" class="clickable" url="/task/{{task.id}}/complete"> <a
+                        href="/task/{{task.id}}" class="one-lined">{{
+                        task.name }}</a></p>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="box">
+            <h2>Notes</h2>
+            <div class="d-flex">
+                <div class="box box-dotted clickable" url="/note/new/{{category.id}}">
+                    <a href="#">Add a Note</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+{% endblock js %}
+
+<div class="row">
+    <div class="d-flex align-tasks-center me-3">
+        <h2>categorys</h2>
+        <a href="/category/new/{{category.id}}" class="btn btn-secondary">Add a New category</a>
+    </div>
+    <div class="d-flex">
+        {% set categorys = category.inner_categorys %}
+        {% if categorys %}
+        {% for inner_category in categorys %}
+        <div class="box clickable" url="/category/{{inner_category.id}}">
+            {{ inner_category.name }}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>You have no categorys</p>
+        {% endif %}
+    </div>
+</div>

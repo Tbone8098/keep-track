@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between align-items-center bg-c1 txt-c5">
+    <h1>Keep Track</h1>
+    <div>
+        <ul class="ul-menu">
+            {% if session['page'] != 'dashboard' %}
+            <li><a class="btn bg-c2 txt-c4" href="/">Home</a></li>
+            {% endif %}
+            {% if session['page'] != 'user_settings' %}
+            <li><a class="btn bg-c2 txt-c4" href="/user/settings">Settings</a></li>
+            {% endif %}
+            <li><a class="btn bg-c5 txt-c2" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</div>

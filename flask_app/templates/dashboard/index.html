@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% include 'components/navbar.html' %}
+    <div class="row">
+        <h2>Your Categories</h2>
+        <div class="d-flex">
+            {% set categories = user.categories  %}
+            {% if categories %}
+                {% for category in categories %}
+                    <div class="box clickable" url="/category/{{category.id}}">
+                        {{ category.name }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="box box-dotted clickable" url="/category/new">
+                <a href="#">Add a category</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Family Categories</h2>
+    </div>
+{% endblock content %}
