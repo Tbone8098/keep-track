@@ -39,16 +39,12 @@ class Task(model_base.base_model):
 
     @classmethod
     def create_join(cls, data):
-        print("running create_join for tasks model")
         query = 'INSERT INTO inner_tasks (task_id, inner_task_id) VALUES (%(task_id)s, %(inner_task_id)s)'
         return connectToMySQL(DATABASE_SCHEMA).query_db(query,data)
 
     @classmethod
     def delete_one(cls, **data):
         task = Task.get_one(id=data['id'])
-        print("***********")
-        print(data)
-        print(task)
         sub_tasks = task.sub_tasks
 
         for sub_task in sub_tasks:

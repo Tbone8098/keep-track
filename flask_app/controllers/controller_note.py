@@ -12,13 +12,22 @@ def new_note(category_id):
 def create_note():
     category_id = session['category_id']
 
-    
+    data = {
+        **request.form,
+        'category_id': category_id
+    }
+
+    model_note.Note.create(**data)
+
     del session['category_id']
     return redirect(f'/category/{category_id}')
 
 @app.route('/note/<int:id>')
 def show_note(id):
-    return 'show note'
+    context = {
+        'note': model_note.Note.get_one(id=id)
+    }
+    return render_template('notes/note_show.html', **context)
 
 @app.route('/note/<int:id>/edit')
 def edit_note(id):

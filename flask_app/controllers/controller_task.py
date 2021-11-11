@@ -7,9 +7,7 @@ from flask_app.models import model_task, model_category
 def new_task(category_id, task_id=0):
     session['page'] = 'task_new'
     session['category_id'] = category_id
-    print(f"set category_id into session {session['category_id']}")
     if task_id > 0:
-        print("set task_id in session")
         session['task_id'] = task_id
     return render_template('tasks/task_new.html')
 
@@ -54,6 +52,7 @@ def create_task():
         
     del session['category_id']
     return redirect(f"/category/{category.id}")
+    # return redirect(session['full_path_two_back'] )
 
 @app.route('/task/<int:id>')
 def show_task(id):
@@ -78,7 +77,6 @@ def complete_task(task_id):
         completed = False
     else:
         completed = True
-    print(completed)
 
     task.update_one(id=task_id ,is_completed=completed)
     return redirect(f"/category/{task.category_id}")

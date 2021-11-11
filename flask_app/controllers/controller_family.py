@@ -12,7 +12,6 @@ def clear_family():
 @app.route('/family/join', methods=['post'])
 def join_family():
     family = model_family.Family.get_one(code=request.form['code'])
-    print(family)
     if not family:
         flash('No family found by that Code', 'err_family_code')
         return redirect('/register')

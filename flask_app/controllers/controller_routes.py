@@ -2,6 +2,8 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash, jsonify
 from flask_app.models import model_user
 
+from datetime import datetime, time, timedelta
+
 @app.route('/')
 def index():
     if 'uuid' in session:
@@ -22,8 +24,17 @@ def dashboard():
     return render_template('dashboard/index.html', **context)
 
 # @app.after_request
-# def test(resp):
-#     # print(request.remote_addr)
+# def page(resp):
+#     timestamp = datetime.now()
+#     timestamp = timestamp.timestamp() * 1000
+
+#     if timestamp > session['timestamp'] + 3000:
+#         session['full_path_two_back'] = session['full_path']
+#         session['full_path'] = request.full_path
+#         session['timestamp'] = timestamp
+#         print(f"two back: {session['full_path_two_back'] }")
+#         print(f"full_path: {session['full_path'] }")
+
 #     return resp
 
 @app.route('/', defaults={'path': ''})

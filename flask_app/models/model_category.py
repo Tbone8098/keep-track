@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
-from flask_app.models import model_base, model_task
+from flask_app.models import model_base, model_task, model_note
 from flask_app import DATABASE_SCHEMA
 import re
 
@@ -12,6 +12,17 @@ class Category(model_base.base_model):
         self.description = data['description']
         self.user_id = data['user_id']
         self.is_public = data['is_public']
+
+    @property
+    def notes(self):
+        query = f'SELECT * FROM notes WHERE category_id = {self.id}'
+        results = connectToMySQL(DATABASE_SCHEMA).query_db(query)
+        if results:
+            notes = []
+            for note in results:
+                notes.append(model_note.Note(note))
+            return notes
+        return results
 
     @property
     def parent(self):
@@ -34,7 +45,6 @@ class Category(model_base.base_model):
     def inner_categories(self):
         query = f'SELECT * FROM categories l1 JOIN inner_categories ON inner_categories.category_id = l1.id JOIN categories l2 ON inner_categories.inner_category_id = l2.id WHERE l1.id = {self.id};'
         results = connectToMySQL(DATABASE_SCHEMA).query_db(query)
-        print(results)
         if results:
             categories = []
             for category in results:

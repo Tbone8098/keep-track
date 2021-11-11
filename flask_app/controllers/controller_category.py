@@ -6,6 +6,7 @@ from flask_app.models import model_category
 @app.route('/category/new/<int:category_id>')
 def new_category(category_id=0):
     session['page'] = 'category_new'
+    session['category_id'] = category_id
     context = {
         'category_id': category_id
     }
@@ -13,24 +14,25 @@ def new_category(category_id=0):
 
 @app.route('/category/create', methods=['post'])
 def create_category():
+    category_id = session['category_id']
+    del session['category_id']
+
     if not model_category.Category.validate(request.form):
-        if 'category_id' in request.form:
-            return redirect(f'/category/new/{request.form["category_id"]}')
+        if category_id > 0:
+            return redirect(f'/category/new/{category_id}')
         else:
             return redirect('/category/new')
 
-    if 'category_id' in request.form:
+    if category_id > 0:
         data = {
             **request.form,
             'user_id': session['uuid'],
             'is_main': 0
         }
 
-        del data['category_id']
-
         id = model_category.Category.create(**data)
         model_category.Category.create_join({
-            'category_id': int(request.form['category_id']),
+            'category_id': category_id,
             'inner_category_id': id
         })
     else:
@@ -40,6 +42,9 @@ def create_category():
             'is_main': 1
         }
         model_category.Category.create(**data)
+    
+    if category_id > 0:
+        return redirect(f'/category/{category_id}')
     return redirect('/')
 
 @app.route('/category/<int:id>')

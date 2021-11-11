@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block css %}
+    
+{% endblock css %}
+
+
+{% block content %}
+{% include 'components/navbar.html' %}
+
+<h1>{{ note.name }}</h1>
+
+<form action="/note/{{note.id}}/update" method="post">
+    <div class="mb-3">
+        <label for="name">Name</label>
+        <input class="form-control" type="text" name="name" id="name" value="{{note.name}}">
+    </div>
+    <div class="mb-3">
+        <label for="content">Content</label>
+        <textarea class="form-control" name="content" id="content" cols="30" rows="10">{{note.content}}</textarea>
+    </div>
+    <button class="btn btn-success">Update</button>
+</form>
+{% endblock content %}
+
+{% block js %}
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+{% endblock js %}
+
